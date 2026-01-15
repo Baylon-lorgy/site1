@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippine Islands Tourism - Discover Paradise</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(0,0,0,0.3);
+            box-shadow: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4a574;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4a574;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('image/landing.jpg') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: slideUp 1s ease;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #d4a574;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cta-button:hover {
+            background: #b8884a;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        section:nth-child(even) {
+            background: #f5f5f5;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        /* Destinations Grid */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .destination-info {
+            padding: 1.5rem;
+        }
+
+        .destination-info h3 {
+            color: #d4a574;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .destination-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Packages Grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            perspective: 1000px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .package-front, .package-back {
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            color: white;
+            border-radius: 10px;
+            transition: transform 0.6s;
+        }
+
+        .package-front {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .package-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .package-front-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .package-back {
+            background: linear-gradient(135deg, #d4a574 0%, #8b7355 100%);
+            transform: rotateY(180deg);
+        }
+
+        .package-card:hover .package-front {
+            transform: rotateY(180deg);
+        }
+
+        .package-card:hover .package-back {
+            transform: rotateY(0);
+        }
+
+        .package-front h3, .package-back h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-back ul {
+            list-style: none;
+            margin: 1rem 0;
+            flex-grow: 1;
+        }
+
+        .package-back p {
+            flex-grow: 1;
+            margin: 1.5rem 0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .package-back li {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .package-back li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #fff;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* Features Grid */
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            color: #d4a574;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #d4a574;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #d4a574;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d4a574;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <nav class="container">
+            <a href="#" class="logo">🇵🇭 Philippine Islands</a>
+            <ul class="nav-links">
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#why-us">Why Visit</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Discover the Pearl of Asia</h1>
+                <p>Experience pristine beaches, vibrant culture, and unforgettable adventures in the Philippines.</p>
+                <a href="#packages" class="cta-button">Explore Packages</a>
+            </div>
+        </section>
+
+        <!-- Top Destinations Section -->
+        <section id="destinations">
+            <div class="container">
+                <h2 class="section-title">Top Philippine Destinations</h2>
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <img src="image/boracay.jpg" alt="Boracay">
+                        <div class="destination-info">
+                            <h3>Boracay Island</h3>
+                            <p>Famous for its white-sand beaches, crystal-clear waters, and vibrant nightlife. Perfect for water sports and relaxation.</p>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="image/palawan.jpg" alt="Palawan">
+                        <div class="destination-info">
+                            <h3>Palawan</h3>
+                            <p>Home to the iconic Puerto Princesa Underground River and El Nido limestone cliffs. A paradise for nature lovers and adventurers.</p>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="image/cebu.jpg" alt="Cebu">
+                        <div class="destination-info">
+                            <h3>Cebu</h3>
+                            <p>Experience whale shark interactions, historic sites, and beautiful island-hopping tours. The gateway to Visayas awaits.</p>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="image/siargao.jpg" alt="Siargao">
+                        <div class="destination-info">
+                            <h3>Siargao Island</h3>
+                            <p>A surfer's paradise with world-class waves, cloud 9 beach, and laid-back island vibes perfect for water enthusiasts.</p>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="image/banaue.jpg" alt="Banaue">
+                        <div class="destination-info">
+                            <h3>Banaue Rice Terraces</h3>
+                            <p>Marvel at ancient Ifugao terraces carved into the mountains. A UNESCO World Heritage site showcasing indigenous heritage.</p>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="image/taal.jpg" alt="Taal Volcano">
+                        <div class="destination-info">
+                            <h3>Taal Volcano</h3>
+                            <p>Experience stunning volcanic landscapes and hiking trails. One of the most accessible volcanoes in the world.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Travel Packages Section -->
+        <section id="packages">
+            <div class="container">
+                <h2 class="section-title">Philippine Travel Packages</h2>
+                <div class="packages-grid">
+                    <!-- Package 1: Beach Paradise -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/boracay.jpg');">
+                           <div class="package-front-content">
+                             <h3>Boracay Beach Getaway</h3>
+                             <p class="price">₱25,000 / person</p>
+                           </div>
+                        </div>
+                        <div class="package-back">
+                           <h3>Boracay Beach Getaway</h3>
+                           <p>Experience pristine white-sand beaches and crystal-clear waters. Enjoy water sports, island hopping, and stunning sunsets. Perfect for beach lovers and adventure seekers.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 2: Palawan Adventure -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/palawan.jpg');">
+                           <div class="package-front-content">
+                            <h3>Palawan Explorer</h3>
+                             <p class="price">₱35,000 / person</p>
+                           </div>
+                        </div>
+                        <div class="package-back">
+                           <h3>Palawan Explorer</h3>
+                           <p>Discover the majesty of Palawan with the iconic Underground River, pristine lagoons, and world-class diving. Explore El Nido's limestone cliffs and vibrant marine life with expert guides.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Package 3: Cultural Immersion -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/banaue.jpg');">
+                            <div class="package-front-content">
+                             <h3>Cultural & Heritage Tour</h3>
+                             <p class="price">₱20,000 / person</p>
+                            </div>
+                        </div>
+                        <div class="package-back">
+                            <h3>Cultural & Heritage Tour</h3>
+                           <p>Explore the rich cultural heritage of the Philippines. Visit the iconic Banaue Rice Terraces, experience Ifugao village life, learn traditional cooking, and discover historical landmarks that tell the story of our nation.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 4: Whale Shark Adventure -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/cebu.jpg');">
+                            <div class="package-front-content">
+                             <h3>Cebu Whale Shark Safari</h3>
+                             <p class="price">₱18,000 / person</p>
+                            </div>
+                        </div>
+                        <div class="package-back">
+                            <h3>Cebu Whale Shark Safari</h3>
+                           <p>Encounter the gentle whale sharks of Cebu in their natural habitat. Combine thrilling wildlife encounters with island hopping and snorkeling adventures, guided by experienced professionals who capture your unforgettable moments.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 5: Siargao Surf Adventure -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/siargao.jpg');">
+                            <div class="package-front-content">
+                             <h3>Siargao Surf Retreat</h3>
+                             <p class="price">₱22,000 / person</p>
+                            </div>
+                        </div>
+                        <div class="package-back">
+                            <h3>Siargao Surf Retreat</h3>
+                           <p>Ride the waves at the legendary Cloud 9 Beach. Whether you're a beginner or experienced surfer, this retreat offers professional lessons, diving adventures, and island exploration in paradise.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 6: Ultimate Philippines -->
+                    <div class="package-card">
+                        <div class="package-front" style="background-image: url('image/taal.jpg');">
+                            <div class="package-front-content">
+                             <h3>Ultimate Philippines Tour</h3>
+                             <p class="price">₱60,000 / person</p>
+                            </div>
+                        </div>
+                        <div class="package-back">
+                            <h3>Ultimate Philippines Tour</h3>
+                           <p>The complete Philippine experience! Visit all major destinations with luxury accommodations, all meals included, internal flights, and curated activities. This 14-night journey showcases the best of the islands.</p>
+                           <a href="#contact" class="cta-button">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Visit Philippines Section -->
+        <section id="why-us">
+            <div class="container">
+                <h2 class="section-title">Why Visit the Philippines?</h2>
+                <div class="why-us-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🌴</div>
+                        <h3>Paradise Beaches</h3>
+                        <p>Over 7,000 islands with pristine white-sand beaches, turquoise waters, and world-class diving spots.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">😊</div>
+                        <h3>Warm Hospitality</h3>
+                        <p>Filipinos are known for their genuine warmth and hospitality. Experience authentic Filipino culture and cuisine.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💰</div>
+                        <h3>Affordable Travel</h3>
+                        <p>The Philippines offers excellent value for money with quality accommodations, food, and activities at reasonable prices.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🏔️</div>
+                        <h3>Diverse Landscapes</h3>
+                        <p>From mountain terraces to volcanic peaks, tropical rainforests to coral reefs - nature's diversity at its finest.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🤿</div>
+                        <h3>Adventure Activities</h3>
+                        <p>World-class surfing, diving, island hopping, hiking, and water sports for thrill-seekers of all levels.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎭</div>
+                        <h3>Rich Heritage</h3>
+                        <p>Explore ancient temples, rice terraces, historical sites, and experience vibrant local festivals and traditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Travelers Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The Philippines exceeded all my expectations! The beaches are absolutely stunning, the people are incredibly friendly, and the food was delicious. I've already booked my next trip!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=160&h=150&dpr=1" alt="Author">
+                            <div class="author-info">
+                                <h4>Maria S.</h4>
+                                <p>Boracay & Cebu</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"My Palawan experience was unforgettable! The Underground River was magical, and the snorkeling was incredible. Every moment was pure paradise. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=160&h=150&dpr=1" alt="Author">
+                             <div class="author-info">
+                                <h4>John M.</h4>
+                                <p>Palawan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"As a surfer, Siargao was a dream come true! Cloud 9 beach is amazing, the locals are welcoming, and the vibe is perfect. Can't wait to return!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=160&h=150&dpr=1" alt="Author">
+                             <div class="author-info">
+                                <h4>Alex R.</h4>
+                                <p>Siargao Island</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Booking Section -->
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Start Your Philippine Adventure</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Preferred Destination</label>
+                        <input type="text" id="destination" name="destination" placeholder="e.g., Boracay, Palawan, Cebu...">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="cta-button submit-btn">Send Inquiry</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Philippine Islands Tourism. Discover the Pearl of Asia. | +63 (2) 1234-5678 | info@philtourism.com</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
